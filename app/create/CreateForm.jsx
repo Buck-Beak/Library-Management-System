@@ -1,8 +1,10 @@
 "use client"
 import React from 'react'
 import { useState } from 'react'
+import { useRouter } from "next/navigation"
 
 export default function CreateForm() {
+    const router = useRouter()
     const [bookName,setBookName] = useState('');
     const [author,setAuthor] = useState('');
     const [description,setDescription] = useState('');
@@ -32,8 +34,14 @@ export default function CreateForm() {
             setAvailable('');
             setError(null);
             setEmptyFields([]);
-            console.log("new workout added");
+            console.log("new book added");
+            router.push('/books');
+            router.refresh();
         }
+        /*if (response.status === 201) {
+          router.refresh()
+          router.push('/books');
+        }*/
     }
 
   return (

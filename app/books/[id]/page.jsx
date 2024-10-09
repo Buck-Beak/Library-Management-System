@@ -22,7 +22,7 @@ export default async function BookDetails({params}) {
         <h3>{book.bookName}</h3>
         <small>Written by {book.author}</small>
         <p>{book.description}</p>
-        <p>Available: {book.available}</p>
+        <p className="available-box">Available: {book.available}</p>
       </div>
     </main>
   )

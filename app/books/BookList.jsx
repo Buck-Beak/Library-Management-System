@@ -2,7 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 
 async function getBooks() {
-    const res = await fetch('http://localhost:4000/api/book')
+    const res = await fetch('http://localhost:4000/api/book', {
+      next: {
+        revalidate: 0 // use 0 to opt out of using cache
+      }
+    })
   
     return res.json()
   }
@@ -19,6 +23,7 @@ export default async function BookList() {
               <h4>{book.author}</h4>
               <p>{book.description.slice(0, 200)}...</p>
             </Link>
+            <p className="available-box">Currently available-{book.available}</p>
           </div>
         ))}
       </>
