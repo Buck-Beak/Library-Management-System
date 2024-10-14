@@ -4,7 +4,8 @@ const {
     getBooks,
     getBook,
     deleteBook,
-    updateBook
+    updateBook,
+    rentBook
 }=require('../controllers/bookController')
 const router = express.Router();
 
@@ -22,5 +23,7 @@ router.delete('/:id',deleteBook);
 
 //UPDATE a new workout
 router.patch('/:id',updateBook);
+
+router.patch('/:id/rent', rentBook);
 
 module.exports = router

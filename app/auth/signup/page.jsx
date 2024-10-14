@@ -1,19 +1,42 @@
 "use client"
 import React from 'react'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation';
 
 export default function signup() {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [firstName,setFirstName] = useState('');
     const [lastName,setLastName] = useState('');
+    const [error,setError] = useState('');
+    const router = useRouter();
 
-    const handleSubmit=(e)=>{
+    const handleSubmit=async(e)=>{
         e.preventDefault();
         console.log('signup');
+        try {
+          const response = await fetch('http://localhost:4000/api/user/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ firstname: firstName, lastname: lastName, email, password }),
+          });
+    
+          const data = await response.json();
+    
+          if (!response.ok) {
+            throw new Error(data.error || "Failed to sign up");
+          }
+          // Optionally, you could redirect or take other actions here
+          router.push('/auth/login');
+        } catch (err) {
+          setError(err.message);  // Set error message
+        }
     }
   return (
     <form onSubmit = {handleSubmit}>
+        <label>
+          <h1 className="text-2xl font-bold text-center mb-4">Sign Up</h1>
+        </label>
         <label>
         <span>First Name:</span>
         <input
@@ -55,6 +78,7 @@ export default function signup() {
         />
         </label>
         <button className="btn-primary">Login</button>
+        {error && <div className="error">{error}</div>}
     </form>
   )
 }
