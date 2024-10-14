@@ -15,9 +15,6 @@ const loginUser = async(req,res)=>{
         //create a token
         const token = createToken(user._id);
 
-        localStorage.setItem('userId', user._id); // Store user ID in local storage
-        localStorage.setItem('token', token); // Store token for future requests
-
         res.status(200).json({email,token});
     }catch(error){
         res.status(400).json({error:error.message});

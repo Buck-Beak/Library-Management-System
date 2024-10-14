@@ -2,12 +2,15 @@
 import React from 'react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
-export default function login() {
+export default function Login() {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [error,setError] = useState('');
+    //const [signedIn,setIsSignedIn] = useState(false);
     const router = useRouter();
+    const { setSignedIn } = useAuth();
 
     const handleSubmit=async(e)=>{
         e.preventDefault();
@@ -24,6 +27,12 @@ export default function login() {
           if (!response.ok) {
             throw new Error(data.error || "Failed to login");
           }
+
+          //localStorage.setItem('user',JSON.stringify(json));
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('userEmail', data.email);
+          setSignedIn(true);
+
           // Optionally, you could redirect or take other actions here
           router.push('/books');
         } catch (err) {

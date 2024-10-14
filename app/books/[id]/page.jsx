@@ -41,7 +41,7 @@ export default function BookDetails({params}) {
 
         const data = await res.json();
         setBook((prevBook) => ({ ...prevBook, available: data.available })); // Update available count
-        setMsg('Please return the book within 2 weeks');
+        setMsg('Kindly return the book within a week to avoid a 100 ruppees fee.');
       } catch (error) {
           console.error(error.message);
       }
